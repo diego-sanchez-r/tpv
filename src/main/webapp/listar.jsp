@@ -15,11 +15,12 @@
     </head>
     <body>
         <h1>Listado de productos</h1>
+        <a href="Servlet?op=insertar" class="btn btn-primary">Nuevo Producto</a>
         <% 
             List<Productos> listaProductos = ( List<Productos> ) request.getAttribute("listado"); 
             String mensaje = (String) request.getAttribute("mensaje");
         %>
-        <h2 class="alert alert-success"><%=mensaje%></h2>
+        <h2 class="alert alert-success"><% if(mensaje != null) out.print(mensaje); %></h2>
         <table class="table">
             <% for (Productos p: listaProductos) { %>
             <tr>

@@ -14,8 +14,15 @@
     </head>
     <body>
         <h1>Producto</h1>
+        <a href="Servlet?=listar">Volver</a>
+        <%
+            String mensaje = (String) request.getAttribute("mensaje");
+            String operacion = (String) request.getAttribute("operacion");
+        %>
         <form action="Servlet">
-            <input type="hidden" value="actualizardatos" name="op">
+            <% if(mensaje != null) out.print(mensaje); %>
+            
+            <input type="hidden" value="<%= operacion %>" name="op">
             <p>Id:<input type="text" value="${producto.id}" name="id" readonly></p>
             <p>Nombre:<input type="text" value="${producto.nombre}" name="nombre"></p>
             <p>Catalogo:<input type="text" value="${producto.categoria}" name="categoria"></p>
