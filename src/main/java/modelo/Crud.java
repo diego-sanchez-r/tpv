@@ -35,6 +35,17 @@ public class Crud {
 
         return productosBD;        
         }
+     public static List<Productos> getProductosPaginado(int offset,int lineas_pagina) {
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("mi_presistence_unit");
+        EntityManager manager = factory.createEntityManager();
+        String sql = "SELECT * FROM productos";
+        Query q = manager.createNativeQuery(sql,Productos.class); //método para consultas en SQL
+        q.setFirstResult(offset);
+        q.setMaxResults(lineas_pagina);
+        List<Productos> productosBD =  q.getResultList();
+
+        return productosBD;        
+        }
     
         public static int destroyProducto(int id) {
             EntityManagerFactory factory = Persistence.createEntityManagerFactory("mi_presistence_unit");

@@ -20,6 +20,7 @@ import modelo.Productos;
  * @author Diego_Sanchez
  */
 public class Servlet extends HttpServlet {
+    final int NUM_LINEAS_PAGINA = 5;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,7 +38,20 @@ public class Servlet extends HttpServlet {
             }
             if (op.equals("listar")) {
                 List<Productos> listaProductos=Crud.getProductos();
+                /*CALCULO PARA LA PAGINACIÓN*/
+                int pagina=1;
+                int offset=0;
+                
+                if(request.getParameter("pagina") != null){
+                    pagina = Integer.parseInt(request.getParameter("pagina"));
+                    offset = ((pagina-1) * NUM_LINEAS_PAGINA);
+                }
+                int num_paginas = (int) Math.ceil(listaProductos.size()/ NUM_LINEAS_PAGINA);
+                listaProductos = Crud.getProductosPaginado(offset, NUM_LINEAS_PAGINA);
+                
                 request.setAttribute("listado", listaProductos);
+                request.setAttribute("pagina", pagina);
+                request.setAttribute("num_paginas", num_paginas);
                 request.setAttribute("mensaje", "");
                 request.getRequestDispatcher("listar.jsp").forward(request, response);
             }
